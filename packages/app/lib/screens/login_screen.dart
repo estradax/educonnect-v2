@@ -1,3 +1,6 @@
+import 'package:educonnect_app/screens/register_screen.dart';
+import 'package:educonnect_app/widgets/ec_auth_form_card.dart';
+import 'package:educonnect_app/widgets/ec_auth_scaffold.dart';
 import 'package:educonnect_app/widgets/ec_button.dart';
 import 'package:educonnect_app/widgets/ec_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -14,24 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 11),
-          child: Image.asset('lib/assets/images/educonnect-logo.png'),
-        ),
-        titleSpacing: 0,
-        title: const Text(
-          'EduConnect',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-        elevation: 1,
-        backgroundColor: Colors.white,
-        shadowColor: Colors.black,
-      ),
+    return EcAuthScaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -58,19 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 24,
               ),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(22),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      blurRadius: 8,
-                      offset: const Offset(4, 4),
-                    ),
-                  ],
-                ),
+              EcAuthFormCard(
                 child: Column(
                   children: [
                     const SizedBox(
@@ -87,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 22,
                     ),
                     Image.asset(
-                      'lib/assets/images/register-vector.png',
+                      'lib/assets/images/login-vector.png',
                       width: 218,
                       height: 190,
                     ),
@@ -146,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: EcButton(
                         text: 'Login',
                         textStyle: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -160,10 +134,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text('Don\'t have any account? '),
-                        Text(
-                          'Register now',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterScreen(),
+                            ),
+                          ),
+                          child: Text(
+                            'Register now',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
                       ],

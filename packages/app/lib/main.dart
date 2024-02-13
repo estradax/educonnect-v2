@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'EduConnect V2',
       theme: ThemeData(
         primaryColor: const Color(0xFF1C74B8),
+        indicatorColor: Colors.black.withOpacity(0.05),
         useMaterial3: true,
       ),
       home: const LoginScreen(),
