@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class EcTextFormField extends StatelessWidget {
   final String label;
   final String hintText;
+  final bool obsecureText;
 
   const EcTextFormField({
     super.key,
     required this.label,
     required this.hintText,
+    this.obsecureText = false,
   });
 
   @override
@@ -26,6 +28,7 @@ class EcTextFormField extends StatelessWidget {
           height: 4,
         ),
         TextFormField(
+          obscureText: obsecureText,
           style: const TextStyle(fontSize: 12),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(

@@ -132,6 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             EcTextFormField(
                               label: 'Password',
                               hintText: 'Enter your password',
+                              obsecureText: true,
                             ),
                           ],
                         ),
