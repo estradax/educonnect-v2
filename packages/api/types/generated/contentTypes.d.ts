@@ -376,7 +376,7 @@ export interface ApiEcUserEcUser extends Schema.CollectionType {
   attributes: {
     fullName: Attribute.String & Attribute.Required;
     email: Attribute.Email & Attribute.Required & Attribute.Unique;
-    role: Attribute.Enumeration<['school', 'educator', 'freshGraduate']> &
+    role: Attribute.Enumeration<['OTHER', 'EDUCATOR', 'FRESH_GRADUATE']> &
       Attribute.Required;
     firebaseUid: Attribute.String & Attribute.Required & Attribute.Unique;
     createdAt: Attribute.DateTime;

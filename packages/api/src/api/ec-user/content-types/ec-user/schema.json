@@ -24,9 +24,9 @@
     "role": {
       "type": "enumeration",
       "enum": [
-        "school",
-        "educator",
-        "freshGraduate"
+        "OTHER",
+        "EDUCATOR",
+        "FRESH_GRADUATE"
       ],
       "required": true
     },
