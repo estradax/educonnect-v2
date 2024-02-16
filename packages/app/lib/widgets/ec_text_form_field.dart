@@ -4,12 +4,14 @@ class EcTextFormField extends StatelessWidget {
   final String label;
   final String hintText;
   final bool obsecureText;
+  final TextEditingController? controller;
 
   const EcTextFormField({
     super.key,
     required this.label,
     required this.hintText,
     this.obsecureText = false,
+    this.controller,
   });
 
   @override
@@ -28,6 +30,7 @@ class EcTextFormField extends StatelessWidget {
           height: 4,
         ),
         TextFormField(
+          controller: controller,
           obscureText: obsecureText,
           style: const TextStyle(fontSize: 12),
           decoration: InputDecoration(

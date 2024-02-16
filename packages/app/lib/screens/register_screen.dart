@@ -2,11 +2,26 @@ import 'package:educonnect_app/screens/login_screen.dart';
 import 'package:educonnect_app/widgets/ec_auth_form_card.dart';
 import 'package:educonnect_app/widgets/ec_auth_scaffold.dart';
 import 'package:educonnect_app/widgets/ec_button.dart';
+import 'package:educonnect_app/widgets/ec_chip.dart';
 import 'package:educonnect_app/widgets/ec_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _fullNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +82,10 @@ class RegisterScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const EcTextFormField(
+                            EcTextFormField(
                               label: 'Full Name',
                               hintText: 'Enter your full name',
+                              controller: _fullNameController,
                             ),
                             const SizedBox(
                               height: 12,
@@ -102,7 +118,7 @@ class RegisterScreen extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 children: const [
                                   EcChip(
-                                    label: 'School',
+                                    label: 'Other',
                                   ),
                                   SizedBox(
                                     width: 6,
@@ -129,6 +145,9 @@ class RegisterScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: EcButton(
+                        onTap: () {
+                          debugPrint(_fullNameController.text);
+                        },
                         text: 'Register',
                         backgroundColor: Theme.of(context).primaryColor,
                         textStyle: const TextStyle(
@@ -170,24 +189,6 @@ class RegisterScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class EcChip extends StatelessWidget {
-  final String label;
-
-  const EcChip({
-    super.key,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Chip(
-      backgroundColor: Theme.of(context).indicatorColor,
-      label: Text(label),
-      side: BorderSide.none,
     );
   }
 }
