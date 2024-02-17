@@ -13,7 +13,7 @@ void main() async {
   );
 
   // change host to your local ip address
-  await FirebaseAuth.instance.useAuthEmulator('192.168.1.28', 9099);
+  await FirebaseAuth.instance.useAuthEmulator('192.168.152.7', 9099);
 
   runApp(const MyApp());
 }
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         indicatorColor: Colors.black.withOpacity(0.05),
         useMaterial3: true,
       ),
-      home: StreamBuilder(
+      home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {

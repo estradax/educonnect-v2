@@ -2,6 +2,7 @@ import 'package:educonnect_app/data/register_form.dart';
 import 'package:educonnect_app/data/user.dart';
 import 'package:educonnect_app/helpers.dart';
 import 'package:educonnect_app/screens/login_screen.dart';
+import 'package:educonnect_app/services/register_service.dart';
 import 'package:educonnect_app/widgets/ec_auth_form_card.dart';
 import 'package:educonnect_app/widgets/ec_auth_scaffold.dart';
 import 'package:educonnect_app/widgets/ec_button.dart';
@@ -24,7 +25,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   var _role = UserRole.other;
 
-  void _handleFirebaseUserRegister(UserCredential userCredential) {}
+  void _handleFirebaseUserRegister(
+    UserCredential userCredential,
+    RegisterValidation registerValidation,
+  ) {
+    final registerService = RegisterService();
+
+    registerService.register(
+      RegisterForm(
+        data: RegisterData(
+          fullName: registerValidation.fullName,
+          email: registerValidation.email,
+          role: registerValidation.role,
+          firebaseUid: userCredential.user!.uid,
+        ),
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -183,32 +200,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: EcButton(
                         onTap: () {
-                          final registerForm = RegisterForm(
+                          final registerValidation = RegisterValidation(
                             fullName: _fullNameController.text,
                             email: _emailController.text,
                             password: _passwordController.text,
                             role: _role,
                           );
 
-                          if (!registerForm.isValid()) {
+                          if (!registerValidation.isValid()) {
                             errorDialog(context, 'Invalid input form');
                           }
 
                           FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
-                                email: registerForm.email,
-                                password: registerForm.password,
+                                email: registerValidation.email,
+                                password: registerValidation.password,
                               )
                               .then(
-                                _handleFirebaseUserRegister,
-                              )
-                              .catchError(
-                            (e) {
-                              if (e is FirebaseAuthException) {
-                                errorDialog(context, 'Auth error: ${e.code}');
-                              }
-                            },
-                          );
+                                (userCredential) => _handleFirebaseUserRegister(
+                                  userCredential,
+                                  registerValidation,
+                                ),
+                              );
                         },
                         text: 'Register',
                         backgroundColor: Theme.of(context).primaryColor,
@@ -254,5 +267,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-
-
