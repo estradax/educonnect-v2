@@ -1,5 +1,7 @@
 import 'package:educonnect_app/firebase_options.dart';
 import 'package:educonnect_app/screens/login_screen.dart';
+import 'package:educonnect_app/screens/user_form_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // change host to your local ip address
+  await FirebaseAuth.instance.useAuthEmulator('192.168.1.28', 9099);
 
   runApp(const MyApp());
 }
@@ -25,7 +30,16 @@ class MyApp extends StatelessWidget {
         indicatorColor: Colors.black.withOpacity(0.05),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const UserFormScreen();
+          }
+
+          return const LoginScreen();
+        },
+      ),
     );
   }
 }
