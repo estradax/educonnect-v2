@@ -1,5 +1,4 @@
 import 'package:educonnect_app/firebase_options.dart';
-import 'package:educonnect_app/screens/intro_screen.dart';
 import 'package:educonnect_app/screens/login_screen.dart';
 import 'package:educonnect_app/screens/user_form_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           // FIXME
-          return const IntroScreen();
+          return const UserFormScreen();
 
           if (snapshot.hasData) {
             return const UserFormScreen();
