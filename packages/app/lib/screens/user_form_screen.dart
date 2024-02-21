@@ -1,54 +1,89 @@
+import 'package:educonnect_app/data/user.dart';
 import 'package:educonnect_app/widgets/ec_chip.dart';
 import 'package:educonnect_app/widgets/ec_slider.dart';
 import 'package:educonnect_app/widgets/ec_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class UserFormScreen extends StatelessWidget {
-  const UserFormScreen({super.key});
+class UserFormScreen extends StatefulWidget {
+  final UserRole role;
+
+  const UserFormScreen({
+    super.key,
+    required this.role,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return EcSlider(
-      contents: [
-        const EcUserFormSliderContent(
+  State<UserFormScreen> createState() => _UserFormScreenState();
+}
+
+class _UserFormScreenState extends State<UserFormScreen> {
+  final List<Widget> contents = [];
+
+  final _ageController = TextEditingController();
+  final _contactNumberController = TextEditingController();
+
+  final _universityController = TextEditingController();
+  final _degreeController = TextEditingController();
+  final _yearOfGraduationController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.role.index >= UserRole.other.index) {
+      contents.add(
+        EcUserFormSliderContent(
           title: 'Personal Information',
           children: [
             EcTextFormField(
               label: 'Age',
               hintText: 'Enter your age',
+              controller: _ageController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             EcTextFormField(
               label: 'Contact Number',
               hintText: 'Enter your contact number',
+              controller: _contactNumberController,
             ),
           ],
         ),
-        const EcUserFormSliderContent(
+      );
+    }
+
+    if (widget.role.index >= UserRole.freshGraduate.index) {
+      contents.add(
+        EcUserFormSliderContent(
           title: 'Educational Background',
           children: [
             EcTextFormField(
               label: 'University',
               hintText: 'Enter the name of your university',
+              controller: _universityController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             EcTextFormField(
               label: 'Degree',
               hintText: 'Enter your degree',
+              controller: _degreeController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             EcTextFormField(
               label: 'Year of Graduation',
               hintText: 'Enter the year of graduation',
+              controller: _yearOfGraduationController,
             ),
           ],
         ),
+      );
+    }
+
+    if (widget.role.index >= UserRole.educator.index) {
+      contents.add(
         EcUserFormSliderContent(
           title: 'Teaching Experience',
           children: [
@@ -110,7 +145,19 @@ class UserFormScreen extends StatelessWidget {
             ),
           ],
         ),
-      ],
+      );
+    }
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return EcSlider(
+      contents: contents,
+      onDonePress: () {
+        print('doneeee');
+      },
     );
   }
 }

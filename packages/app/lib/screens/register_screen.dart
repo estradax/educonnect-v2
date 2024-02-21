@@ -1,7 +1,9 @@
 import 'package:educonnect_app/data/register_form.dart';
+import 'package:educonnect_app/data/register_result.dart';
 import 'package:educonnect_app/data/user.dart';
 import 'package:educonnect_app/helpers.dart';
 import 'package:educonnect_app/screens/login_screen.dart';
+import 'package:educonnect_app/screens/user_form_screen.dart';
 import 'package:educonnect_app/services/register_service.dart';
 import 'package:educonnect_app/widgets/ec_auth_form_card.dart';
 import 'package:educonnect_app/widgets/ec_auth_scaffold.dart';
@@ -25,13 +27,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   var _role = UserRole.other;
 
-  void _handleFirebaseUserRegister(
+  Future<RegisterResult> _handleFirebaseUserRegister(
     UserCredential userCredential,
     RegisterValidation registerValidation,
-  ) {
+  ) async {
     final registerService = RegisterService();
 
-    registerService.register(
+    return await registerService.register(
       RegisterForm(
         data: RegisterData(
           fullName: registerValidation.fullName,
@@ -199,7 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: EcButton(
-                        onTap: () {
+                        onTap: () async {
                           final registerValidation = RegisterValidation(
                             fullName: _fullNameController.text,
                             email: _emailController.text,
@@ -211,17 +213,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             errorDialog(context, 'Invalid input form');
                           }
 
-                          FirebaseAuth.instance
+                          final userCredential = await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
-                                email: registerValidation.email,
-                                password: registerValidation.password,
-                              )
-                              .then(
-                                (userCredential) => _handleFirebaseUserRegister(
-                                  userCredential,
-                                  registerValidation,
-                                ),
-                              );
+                            email: registerValidation.email,
+                            password: registerValidation.password,
+                          );
+
+                          final result = await _handleFirebaseUserRegister(
+                            userCredential,
+                            registerValidation,
+                          );
+
+                          if (!context.mounted) return;
+
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => UserFormScreen(
+                                role: result.data.attributes.role,
+                              ),
+                            ),
+                          );
                         },
                         text: 'Register',
                         backgroundColor: Theme.of(context).primaryColor,
