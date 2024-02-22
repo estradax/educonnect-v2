@@ -1,6 +1,5 @@
 import 'package:educonnect_app/firebase_options.dart';
-import 'package:educonnect_app/screens/intro_screen.dart';
-import 'package:educonnect_app/screens/statistic_screen.dart';
+import 'package:educonnect_app/screens/master_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
         indicatorColor: Colors.black.withOpacity(0.05),
         useMaterial3: true,
       ),
-      home: const StatisticScreen(),
+      home: const MasterScreen(),
     );
   }
 }
