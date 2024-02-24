@@ -10,11 +10,6 @@ class SchoolsScreen extends StatelessWidget {
         onPressed: () {
           print('xxx');
         },
-        child: Image.asset(
-          'lib/assets/images/fab.png',
-          width: 32,
-          height: 32,
-        ),
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -22,6 +17,11 @@ class SchoolsScreen extends StatelessWidget {
             color: Colors.black.withOpacity(0.3),
           ),
           borderRadius: BorderRadius.circular(8),
+        ),
+        child: Image.asset(
+          'lib/assets/images/fab.png',
+          width: 32,
+          height: 32,
         ),
       ),
       body: SingleChildScrollView(
