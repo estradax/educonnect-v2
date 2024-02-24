@@ -1,9 +1,14 @@
+import 'package:educonnect_app/data/user.dart';
 import 'package:educonnect_app/screens/register_screen.dart';
+import 'package:educonnect_app/screens/user_form_screen.dart';
+import 'package:educonnect_app/services/login_service.dart';
 import 'package:educonnect_app/widgets/ec_auth_form_card.dart';
 import 'package:educonnect_app/widgets/ec_auth_scaffold.dart';
 import 'package:educonnect_app/widgets/ec_button.dart';
 import 'package:educonnect_app/widgets/ec_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,12 +73,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 48,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: EcButton(
+                        onTap: () async {
+                          final GoogleSignInAccount? googleUser =
+                              await GoogleSignIn().signIn();
+                          final GoogleSignInAuthentication? googleAuth =
+                              await googleUser?.authentication;
+                          final credential = GoogleAuthProvider.credential(
+                            accessToken: googleAuth?.accessToken,
+                            idToken: googleAuth?.idToken,
+                          );
+
+                          final userCredential = await FirebaseAuth.instance
+                              .signInWithCredential(credential);
+
+                          await LoginService().loginWithGoogle(userCredential);
+
+                          if (!context.mounted) return;
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const UserFormScreen(
+                                role: UserRole.educator,
+                              ),
+                            ),
+                          );
+                        },
                         text: 'Login With Google',
-                        icon: AssetImage('lib/assets/images/google-icon.png'),
-                        textStyle: TextStyle(fontSize: 16),
+                        icon: const AssetImage('lib/assets/images/google-icon.png'),
+                        textStyle: const TextStyle(fontSize: 16),
                       ),
                     ),
                     const SizedBox(

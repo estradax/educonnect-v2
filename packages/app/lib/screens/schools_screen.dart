@@ -1,3 +1,4 @@
+import 'package:educonnect_app/screens/school_map_screen.dart';
 import 'package:flutter/material.dart';
 
 class SchoolsScreen extends StatelessWidget {
@@ -8,7 +9,11 @@ class SchoolsScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('xxx');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const SchoolMapScreen(),
+            ),
+          );
         },
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(

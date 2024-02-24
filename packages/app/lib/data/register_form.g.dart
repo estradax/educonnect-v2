@@ -32,6 +32,6 @@ Map<String, dynamic> _$RegisterDataToJson(RegisterData instance) =>
 
 const _$UserRoleEnumMap = {
   UserRole.other: 'OTHER',
-  UserRole.educator: 'EDUCATOR',
   UserRole.freshGraduate: 'FRESH_GRADUATE',
+  UserRole.educator: 'EDUCATOR',
 };

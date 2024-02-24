@@ -55,8 +55,8 @@ Map<String, dynamic> _$RegisterResultAttributesToJson(
 
 const _$UserRoleEnumMap = {
   UserRole.other: 'OTHER',
-  UserRole.educator: 'EDUCATOR',
   UserRole.freshGraduate: 'FRESH_GRADUATE',
+  UserRole.educator: 'EDUCATOR',
 };
 
 RegisterResultMeta _$RegisterResultMetaFromJson(Map<String, dynamic> json) =>

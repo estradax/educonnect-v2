@@ -1,4 +1,5 @@
 import 'package:educonnect_app/data/user.dart';
+import 'package:educonnect_app/screens/master_screen.dart';
 import 'package:educonnect_app/widgets/ec_chip.dart';
 import 'package:educonnect_app/widgets/ec_slider.dart';
 import 'package:educonnect_app/widgets/ec_text_form_field.dart';
@@ -156,7 +157,11 @@ class _UserFormScreenState extends State<UserFormScreen> {
     return EcSlider(
       contents: contents,
       onDonePress: () {
-        print('doneeee');
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const MasterScreen(),
+          ),
+        );
       },
     );
   }

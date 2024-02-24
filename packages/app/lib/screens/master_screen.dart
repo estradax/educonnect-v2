@@ -72,15 +72,21 @@ class _MasterScreenState extends State<MasterScreen> {
             label: 'Schools',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.sd),
+            icon: ImageIcon(
+              AssetImage('lib/assets/images/stat-icon.png'),
+            ),
             label: 'Statistics',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.sd),
+            icon: ImageIcon(
+              AssetImage('lib/assets/images/jobs-icon.png'),
+            ),
             label: 'Jobs',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.sd),
+            icon: ImageIcon(
+              AssetImage('lib/assets/images/prof-icon.png'),
+            ),
             label: 'Profile',
           ),
         ],
