@@ -1,4 +1,5 @@
 import 'package:educonnect_app/screens/home_screen.dart';
+import 'package:educonnect_app/screens/schools_screen.dart';
 import 'package:educonnect_app/screens/statistic_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _MasterScreenState extends State<MasterScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const Text('Schools'),
+    const SchoolsScreen(),
     const StatisticScreen(),
   ];
 

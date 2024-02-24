@@ -7,18 +7,18 @@ class StatisticScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding: EdgeInsets.all(14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const EcHeadingText(text: 'Live Statistic'),
-            const SizedBox(
+            EcHeadingText(text: 'Live Statistic'),
+            SizedBox(
               height: 6,
             ),
-            const EcSimpleStatCard(),
-            const SizedBox(
+            EcSimpleStatCard(),
+            SizedBox(
               height: 24,
             ),
             EcStatCard(
@@ -80,13 +80,13 @@ class EcStatCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              Text('The dropdown'),
+              const Text('The dropdown'),
             ],
           ),
           const SizedBox(
