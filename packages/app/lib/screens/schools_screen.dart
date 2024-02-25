@@ -1,8 +1,30 @@
+import 'package:educonnect_app/data/school_result.dart';
 import 'package:educonnect_app/screens/school_map_screen.dart';
+import 'package:educonnect_app/services/school_service.dart';
 import 'package:flutter/material.dart';
 
-class SchoolsScreen extends StatelessWidget {
+class SchoolsScreen extends StatefulWidget {
   const SchoolsScreen({super.key});
+
+  @override
+  State<SchoolsScreen> createState() => _SchoolsScreenState();
+}
+
+class _SchoolsScreenState extends State<SchoolsScreen> {
+  SchoolResult? schoolResult;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final result = await SchoolService().fetchAll();
+
+      setState(() {
+        schoolResult = result;
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,18 +114,21 @@ class SchoolsScreen extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              const EcSchoolCard(
-                name: 'SMPN 44 Bandung',
-                address:
-                    'Jl.Cihaur Geulis No 14, Tongkeng, Bandung, Jawa Barat',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const EcSchoolCard(
-                name: 'SMA Al-Irsyad Satya',
-                address:
-                    'Jl.Lengkong Kecil No 14, Lengkong, Jakarta, Jawa Barat',
+              Column(
+                children: schoolResult == null
+                    ? []
+                    : schoolResult!.data
+                        .map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: EcSchoolCard(
+                              name: e.attributes.name,
+                              address: e.attributes.address,
+                              level: e.attributes.level,
+                            ),
+                          ),
+                        )
+                        .toList(),
               ),
             ],
           ),
@@ -150,11 +175,13 @@ class EcSchoolIndicator extends StatelessWidget {
 class EcSchoolCard extends StatelessWidget {
   final String name;
   final String address;
+  final SchoolLevel level;
 
   const EcSchoolCard({
     super.key,
     required this.name,
     required this.address,
+    required this.level,
   });
 
   @override
